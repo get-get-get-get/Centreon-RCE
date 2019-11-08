@@ -6,7 +6,7 @@ Revision of https://github.com/mhaskar/CVE-2019-13024
 ## HOW TO USE:
 1. Edit argument defaults for convenience, or don't (bottom of script)
 2. If needed, edit 'edit_command' function to defeat defenses
-3. '-v' for troubleshooting
+3. '-v' for troubleshooting/verbose output (prints response content)
 
 # EXAMPLES:
     ./centreon_rce.py whoami
